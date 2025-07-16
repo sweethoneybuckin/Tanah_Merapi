@@ -1,8 +1,12 @@
 import express from 'express';
-import { login, refreshToken, logout } from '../controllers/AuthController.js';
+import { register, login, refreshToken, logout } from '../controllers/AuthController.js';
 
 const router = express.Router();
 
+// Registration route (for creating admin users)
+router.post('/register', register);
+
+// Authentication routes
 router.post('/login', login);
 router.get('/token', refreshToken);
 router.delete('/logout', logout);

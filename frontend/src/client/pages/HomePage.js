@@ -5,7 +5,12 @@ import api from '../../utils/api';
 import './HomePage.scss';
 import Loader from '../../shared/components/Loader';
 import aboutImage from '../../images/about.jpg';
-import { ArrowRight } from 'lucide-react';
+import contohImage from '../../images/contoh.jpeg';
+import beyonceImage from '../../images/beyonce.png';
+import hissImage from '../../images/hiss.png';
+import instagramLogo from '../../images/instagram.png';
+import tiktokLogo from '../../images/tiktok.png';
+import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { formatCurrency } from '../../utils/formatCurrency';
 import SocialMediaIcon from '../../shared/components/SocialMediaIcon';
 
@@ -16,6 +21,15 @@ const HomePage = () => {
   const [packages, setPackages] = useState([]);
   const [promotions, setPromotions] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  
+  // Custom carousel images
+  const carouselImages = [
+    { src: contohImage, alt: "Tanah Merapi Jeep Track" },
+    { src: beyonceImage, alt: "Beyonce Image" },
+    { src: hissImage, alt: "Hiss Image" }
+  ];
   
   useEffect(() => {
     const fetchData = async () => {
@@ -41,6 +55,23 @@ const HomePage = () => {
     fetchData();
   }, []);
   
+  // Auto-slide effect - only when no slides from API
+  useEffect(() => {
+    if (slides.length === 0) {
+      const interval = setInterval(() => {
+        if (!isTransitioning) {
+          setIsTransitioning(true);
+          setCurrentImageIndex((prev) => 
+            prev === carouselImages.length - 1 ? 0 : prev + 1
+          );
+          setTimeout(() => setIsTransitioning(false), 500);
+        }
+      }, 3000); // Change every 3 seconds
+      
+      return () => clearInterval(interval);
+    }
+  }, [slides.length, carouselImages.length, isTransitioning]);
+  
   const sliderSettings = {
     dots: true,
     infinite: true,
@@ -51,6 +82,32 @@ const HomePage = () => {
     autoplaySpeed: 5000,
     pauseOnHover: true,
     arrows: false
+  };
+  
+  // Custom carousel navigation functions
+  const nextImage = () => {
+    if (isTransitioning) return;
+    setIsTransitioning(true);
+    setCurrentImageIndex((prev) => 
+      prev === carouselImages.length - 1 ? 0 : prev + 1
+    );
+    setTimeout(() => setIsTransitioning(false), 500);
+  };
+  
+  const prevImage = () => {
+    if (isTransitioning) return;
+    setIsTransitioning(true);
+    setCurrentImageIndex((prev) => 
+      prev === 0 ? carouselImages.length - 1 : prev - 1
+    );
+    setTimeout(() => setIsTransitioning(false), 500);
+  };
+  
+  const goToImage = (index) => {
+    if (isTransitioning || index === currentImageIndex) return;
+    setIsTransitioning(true);
+    setCurrentImageIndex(index);
+    setTimeout(() => setIsTransitioning(false), 500);
   };
   
   if (loading) {
@@ -76,19 +133,126 @@ const HomePage = () => {
                   <Link to="/contact" className="cta-button">
                     Kunjungi Kami
                   </Link>
+                  <div className="hero-social-media" style={{
+                    display: 'flex',
+                    gap: '16px',
+                    justifyContent: 'center',
+                    marginTop: '16px'
+                  }}>
+                    <a 
+                      href="https://instagram.com/tana_merapi"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="social-media-link"
+                    >
+                      <img 
+                        src={instagramLogo} 
+                        alt="Instagram"
+                        style={{
+                          width: '50px',
+                          height: '50px',
+                          objectFit: 'contain'
+                        }}
+                      />
+                    </a>
+                    <a 
+                      href="https://tiktok.com/@tanamerapimovement"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="social-media-link"
+                    >
+                      <img 
+                        src={tiktokLogo} 
+                        alt="TikTok"
+                        style={{
+                          width: '50px',
+                          height: '50px',
+                          objectFit: 'contain'
+                        }}
+                      />
+                    </a>
+                  </div>
                 </div>
               </div>
             ))}
           </Slider>
         ) : (
-          <div className="hero-slide">
-            <div className="hero-overlay"></div>
-            <div className="hero-content">
-              <h1>Selamat Datang di Tanah Merapi</h1>
-              <p>Nikmati keindahan alam di lereng Gunung Merapi</p>
-              <Link to="/contact" className="cta-button">
-                Kunjungi Kami
-              </Link>
+          <div className="custom-carousel">
+            <div className="carousel-container">
+              <div 
+                className="carousel-track"
+                style={{
+                  transform: `translateX(-${currentImageIndex * 100}vw)`
+                }}
+              >
+                {carouselImages.map((image, index) => (
+                  <div key={index} className="carousel-slide">
+                    <img src={image.src} alt={image.alt} />
+                    <div className="hero-overlay"></div>
+                  </div>
+                ))}
+              </div>
+              
+              {/* Navigation Arrows */}
+              <button className="carousel-nav carousel-prev" onClick={prevImage}>
+                <ChevronLeft size={24} />
+              </button>
+              <button className="carousel-nav carousel-next" onClick={nextImage}>
+                <ChevronRight size={24} />
+              </button>
+              
+              {/* Dots Indicator */}
+              <div className="carousel-dots">
+                {carouselImages.map((_, index) => (
+                  <button
+                    key={index}
+                    className={`carousel-dot ${index === currentImageIndex ? 'active' : ''}`}
+                    onClick={() => goToImage(index)}
+                  />
+                ))}
+              </div>
+              
+              <div className="hero-content">
+                <h1>Selamat Datang di Tanah Merapi</h1>
+                <p>Nikmati keindahan alam di lereng Gunung Merapi</p>
+                <Link to="/contact" className="cta-button">
+                  Kunjungi Kami
+                </Link>
+                <div className="hero-social-media">
+                  <a 
+                    href="https://instagram.com/tana_merapi"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="social-media-link"
+                  >
+                    <img 
+                      src={instagramLogo} 
+                      alt="Instagram"
+                      style={{
+                        width: '24px',
+                        height: '24px',
+                        objectFit: 'contain'
+                      }}
+                    />
+                  </a>
+                  <a 
+                    href="https://tiktok.com/@tanamerapimovement"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="social-media-link"
+                  >
+                    <img 
+                      src={tiktokLogo} 
+                      alt="TikTok"
+                      style={{
+                        width: '24px',
+                        height: '24px',
+                        objectFit: 'contain'
+                      }}
+                    />
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
         )}
