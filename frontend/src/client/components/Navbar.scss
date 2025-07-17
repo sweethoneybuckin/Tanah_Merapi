@@ -27,16 +27,26 @@
       align-items: center;
       text-decoration: none;
       
-      .logo-text {
-        font-size: 1.5rem;
-        font-weight: 700;
-        color: #2D4F2B; // Changed back to dark color for visibility on white background
-        text-shadow: none; // Remove text shadow
+      .logo-image {
+        height: 50px; // Set a fixed height for the logo
+        width: auto; // Maintain aspect ratio
+        max-width: 180px; // Prevent logo from being too wide
+        object-fit: contain; // Ensure image fits well
         transition: all 0.3s ease;
         
         &:hover {
-          color: #FFB823;
           transform: scale(1.05);
+          filter: brightness(1.1); // Slight brightness increase on hover
+        }
+        
+        @media (max-width: 768px) {
+          height: 40px; // Smaller on mobile
+          max-width: 140px;
+        }
+        
+        @media (max-width: 480px) {
+          height: 35px; // Even smaller on very small screens
+          max-width: 120px;
         }
       }
     }

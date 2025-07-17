@@ -66,7 +66,7 @@ const HomePage = () => {
           );
           setTimeout(() => setIsTransitioning(false), 500);
         }
-      }, 3000); // Change every 3 seconds
+      }, 4000); // Change every 4 seconds
       
       return () => clearInterval(interval);
     }
@@ -133,12 +133,7 @@ const HomePage = () => {
                   <Link to="/contact" className="cta-button">
                     Kunjungi Kami
                   </Link>
-                  <div className="hero-social-media" style={{
-                    display: 'flex',
-                    gap: '16px',
-                    justifyContent: 'center',
-                    marginTop: '16px'
-                  }}>
+                  <div className="hero-social-media">
                     <a 
                       href="https://instagram.com/tana_merapi"
                       target="_blank"
@@ -148,11 +143,6 @@ const HomePage = () => {
                       <img 
                         src={instagramLogo} 
                         alt="Instagram"
-                        style={{
-                          width: '50px',
-                          height: '50px',
-                          objectFit: 'contain'
-                        }}
                       />
                     </a>
                     <a 
@@ -164,11 +154,6 @@ const HomePage = () => {
                       <img 
                         src={tiktokLogo} 
                         alt="TikTok"
-                        style={{
-                          width: '50px',
-                          height: '50px',
-                          objectFit: 'contain'
-                        }}
                       />
                     </a>
                   </div>
@@ -228,11 +213,6 @@ const HomePage = () => {
                     <img 
                       src={instagramLogo} 
                       alt="Instagram"
-                      style={{
-                        width: '24px',
-                        height: '24px',
-                        objectFit: 'contain'
-                      }}
                     />
                   </a>
                   <a 
@@ -244,11 +224,6 @@ const HomePage = () => {
                     <img 
                       src={tiktokLogo} 
                       alt="TikTok"
-                      style={{
-                        width: '24px',
-                        height: '24px',
-                        objectFit: 'contain'
-                      }}
                     />
                   </a>
                 </div>
@@ -400,10 +375,9 @@ const HomePage = () => {
       {/* Contact Section */}
       <section className="section contact-section">
         <div className="container">
-          <h2 className="section-title">Hubungi Kami</h2>
+          <h2 className="section-title">Lokasi</h2>
           <div className="contact-content">
             <div className="contact-info">
-              <h3>Informasi Kontak</h3>
               <p>
                 Jika Anda memiliki pertanyaan atau ingin melakukan reservasi, 
                 jangan ragu untuk menghubungi kami melalui salah satu platform berikut:

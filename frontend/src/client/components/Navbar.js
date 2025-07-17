@@ -3,6 +3,7 @@ import { NavLink, Link } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import './Navbar.scss';
 import SocialMediaIcon from '../../shared/components/SocialMediaIcon';
+import logoImage from '../../images/logo.jpg';
 
 const Navbar = ({ socialMedia }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -36,7 +37,11 @@ const Navbar = ({ socialMedia }) => {
       <div className="container">
         <div className="navbar-brand">
           <Link to="/" className="logo" onClick={closeMenu}>
-            <span className="logo-text">Tanah Merapi</span>
+            <img 
+              src={logoImage} 
+              alt="Tanah Merapi Logo" 
+              className="logo-image"
+            />
           </Link>
           
           <button className="menu-button" onClick={toggleMenu}>

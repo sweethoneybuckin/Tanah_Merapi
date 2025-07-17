@@ -10,34 +10,119 @@
   }
   
   .footer-content {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
     gap: 3rem;
     margin-bottom: 3rem;
+    flex-wrap: wrap;
   }
   
   .footer-title {
-    font-size: 1.5rem;
+    font-size: clamp(3rem, 8vw, 6rem);
     font-weight: 700;
     margin-bottom: 1.5rem;
     color: #FFB823;
+    display: flex;
+    flex-direction: column;
+    line-height: 0.9;
+    
+    .title-line {
+      display: block;
+    }
+  }
+  
+  .footer-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
   
   .footer-description {
-    margin-bottom: 1.5rem;
+    margin-bottom: 0;
     line-height: 1.6;
     color: rgba(0, 0, 0, 0.8);
+    max-width: 400px;
+    text-align: justify;
   }
   
   .contact-item {
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
     color: rgba(0, 0, 0, 0.8);
     
     svg {
       color: #FFB823;
+    }
+  }
+
+  .footer-social-media {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+    justify-content: center;
+    
+    .social-media-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 60px;
+      height: 60px;
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      backdrop-filter: blur(10px);
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      transition: all 0.3s ease;
+      
+      &:hover {
+        background-color: rgba(255, 184, 35, 0.8);
+        border-color: #FFB823;
+        transform: scale(1.1);
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+      }
+      
+      img {
+        width: 36px !important;
+        height: 36px !important;
+        object-fit: contain;
+        filter: brightness(1.2);
+        transition: all 0.3s ease;
+      }
+      
+      &:hover img {
+        filter: brightness(1) contrast(1.2);
+      }
+    }
+    
+    @media (max-width: 768px) {
+      gap: 1.2rem;
+      
+      .social-media-link {
+        width: 55px;
+        height: 55px;
+        
+        img {
+          width: 32px !important;
+          height: 32px !important;
+        }
+      }
+    }
+    
+    @media (max-width: 480px) {
+      gap: 1rem;
+      
+      .social-media-link {
+        width: 50px;
+        height: 50px;
+        
+        img {
+          width: 28px !important;
+          height: 28px !important;
+        }
+      }
     }
   }
   
